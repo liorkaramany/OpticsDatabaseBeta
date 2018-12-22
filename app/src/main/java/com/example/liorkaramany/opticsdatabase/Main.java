@@ -88,28 +88,22 @@ public class Main extends AppCompatActivity {
         String option = item.getTitle().toString();
         if (option.equals("Edit"))
         {
-            /*if (customer.getUrl().isEmpty()) {
-                Intent t = new Intent(this, Text.class);
-                t.putExtra("sign", 1);
+            Intent t = new Intent(this, Input.class);
+            t.putExtra("sign", 1);
 
-                t.putExtra("id", customer.getId());
-                t.putExtra("name", customer.getName());
-                t.putExtra("age", customer.getAge());
-                t.putExtra("left", customer.getLeft());
-                t.putExtra("right", customer.getRight());
-                t.putExtra("price", customer.getPrice());
+            t.putExtra("id", customer.getId());
+            t.putExtra("fname", customer.getfName());
+            t.putExtra("lname", customer.getlName());
+            t.putExtra("customerID", customer.getCustomerID());
+            t.putExtra("address", customer.getAddress());
+            t.putExtra("city", customer.getCity());
+            t.putExtra("phone", customer.getPhone());
+            t.putExtra("mobile", customer.getMobile());
+            t.putExtra("openDate", customer.getOpenDate());
+            t.putExtra("typeID", customer.getTypeID());
+            t.putExtra("url", customer.getUrl());
 
-                startActivity(t);
-            }
-            else
-            {
-                /*Intent t = new Intent(this, Camera.class);
-                t.putExtra("sign", 1);
-
-                t.putExtra("id", customer.getId());
-                t.putExtra("url", customer.getUrl());
-                startActivity(t);
-            } */
+            startActivity(t);
         }
         else if (option.equals("Delete"))
         {
