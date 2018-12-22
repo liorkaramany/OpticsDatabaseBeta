@@ -53,7 +53,7 @@ public class Main extends AppCompatActivity {
                 customerList.clear();
                 for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
                 {
-                    Customer customer = customerSnapshot.getValue(Customer.class);
+                    Customer customer = customerSnapshot.child("object").getValue(Customer.class);
 
                     customerList.add(customer);
                 }
@@ -112,7 +112,7 @@ public class Main extends AppCompatActivity {
                 StorageReference r = FirebaseStorage.getInstance().getReferenceFromUrl(customer.getUrl());
                 r.delete();
             }*/
-            ref.child(id).removeValue();
+            ref.child(id).child("object").removeValue();
             Toast.makeText(this, "Customer has been deleted", Toast.LENGTH_SHORT).show();
         }
 

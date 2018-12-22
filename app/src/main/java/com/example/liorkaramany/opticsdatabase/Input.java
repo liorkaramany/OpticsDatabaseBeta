@@ -97,13 +97,13 @@ public class Input extends AppCompatActivity {
             {
                 String newId = dref.push().getKey();
                 customer = new Customer(newId, fn, ln, cID, a, c, p, m, typeId, url);
-                dref.child(newId).setValue(customer);
+                dref.child(newId).child("object").setValue(customer);
                 Toast.makeText(this, "Customer has been added", Toast.LENGTH_SHORT).show();
             }
             else
                 {
                 customer = new Customer(id, fn, ln, cID, a, c, p, m, typeId, url);
-                dref.child(id).setValue(customer);
+                dref.child(id).child("object").setValue(customer);
                 Toast.makeText(this, "Customer has been edited", Toast.LENGTH_SHORT).show();
             }
 
