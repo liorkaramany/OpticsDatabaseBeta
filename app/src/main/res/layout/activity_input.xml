@@ -93,6 +93,12 @@
 
     </LinearLayout>
 
+    <Button
+        android:onClick="documents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Documents" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -106,6 +112,7 @@
             android:text="Back" />
 
         <Button
+            android:id="@+id/rightBtn"
             android:onClick="upload"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

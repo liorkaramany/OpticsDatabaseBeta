@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ public class Input extends AppCompatActivity {
 
     DatabaseReference dref;
     StorageReference sref;
+
+    Button rightBtn;
 
     int typeID;
     String id, url;
@@ -40,6 +43,8 @@ public class Input extends AppCompatActivity {
         glasses = (CheckBox) findViewById(R.id.glasses);
         lens = (CheckBox) findViewById(R.id.lens);
 
+        rightBtn = (Button) findViewById(R.id.rightBtn);
+
         dref = FirebaseDatabase.getInstance().getReference("customers");
         sref = FirebaseStorage.getInstance().getReference("customers");
 
@@ -57,6 +62,8 @@ public class Input extends AppCompatActivity {
             city.setText("" + gt.getStringExtra("city"));
             phone.setText("" + gt.getStringExtra("phone"));
             mobile.setText("" + gt.getStringExtra("mobile"));
+
+            rightBtn.setText("Save");
 
             if (typeID >= 2)
                 lens.setChecked(true);
@@ -109,5 +116,10 @@ public class Input extends AppCompatActivity {
 
             finish();
         }
+    }
+
+    public void documents(View view) {
+        Intent t = new Intent(this, Documents.class);
+        startActivity(t);
     }
 }

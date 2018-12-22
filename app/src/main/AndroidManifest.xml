@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Credits" />
-        <activity android:name=".Input"></activity>
+        <activity android:name=".Input" />
+        <activity android:name=".Documents"></activity>
     </application>
 
 </manifest>
