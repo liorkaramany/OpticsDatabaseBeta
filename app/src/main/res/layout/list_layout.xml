@@ -2,7 +2,8 @@
 <LinearLayout
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,6 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="17.5dp"
+            android:textColor="#444444"
             android:text="fname" />
 
         <TextView
@@ -21,6 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="17.5dp"
+            android:textColor="#444444"
             android:text="lname" />
 
         <TextView
@@ -77,6 +82,24 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="mobile" />
+
+        <CheckBox
+            android:id="@+id/glasses"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#777777"
+            android:text="Glasses" />
+
+        <CheckBox
+            android:id="@+id/lens"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#777777"
+            android:text="Lens" />
 
     </LinearLayout>
 </LinearLayout>

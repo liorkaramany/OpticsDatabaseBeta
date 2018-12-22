@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +42,9 @@ public class CustomerList extends ArrayAdapter<Customer> {
         TextView mobile = (TextView) listViewItem.findViewById(R.id.mobile);
         TextView opendate = (TextView) listViewItem.findViewById(R.id.opendate);
 
+        CheckBox glasses = (CheckBox) listViewItem.findViewById(R.id.glasses);
+        CheckBox lens = (CheckBox) listViewItem.findViewById(R.id.lens);
+
         Customer customer = customerList.get(position);
 
         fname.setText(customer.getfName());
@@ -51,6 +55,12 @@ public class CustomerList extends ArrayAdapter<Customer> {
         phone.setText(""+customer.getPhone());
         mobile.setText(""+customer.getMobile());
         opendate.setText(""+customer.getOpenDate());
+
+        int typeId = customer.getTypeID();
+        if (typeId >= 2)
+            lens.setChecked(true);
+        if (typeId == 1 || typeId == 3)
+            glasses.setChecked(true);
 
 
         return listViewItem;

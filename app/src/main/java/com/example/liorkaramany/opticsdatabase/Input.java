@@ -15,7 +15,7 @@ import com.google.firebase.storage.StorageReference;
 public class Input extends AppCompatActivity {
 
     EditText fname, lname, customerID, address, city, phone, mobile;
-    CheckBox glasses, lense;
+    CheckBox glasses, lens;
 
     DatabaseReference dref;
     StorageReference sref;
@@ -34,7 +34,7 @@ public class Input extends AppCompatActivity {
         mobile = (EditText) findViewById(R.id.mobile);
 
         glasses = (CheckBox) findViewById(R.id.glasses);
-        lense = (CheckBox) findViewById(R.id.lense);
+        lens = (CheckBox) findViewById(R.id.lens);
 
         dref = FirebaseDatabase.getInstance().getReference("customers");
         sref = FirebaseStorage.getInstance().getReference("customers");
@@ -57,9 +57,19 @@ public class Input extends AppCompatActivity {
             Toast.makeText(this, "You haven't entered all the information", Toast.LENGTH_SHORT).show();
         else
         {
+            int typeId = 0;
+            if (glasses.isChecked() && lens.isChecked())
+                typeId = 3;
+            else if (glasses.isChecked())
+                typeId = 1;
+            else if (lens.isChecked())
+                typeId = 2;
             String id = dref.push().getKey();
-            Customer customer = new Customer(id, fn, ln, cID, a, c, p, m, "");
+            Customer customer = new Customer(id, fn, ln, cID, a, c, p, m, typeId, "");
             dref.child(id).setValue(customer);
+
+            Toast.makeText(this, "Customer has been addded", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 }

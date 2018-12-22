@@ -30,7 +30,7 @@ public class Customer {
 
     }
 
-    public Customer(String id, String fName, String lName, String customerID, String address, String city, String phone, String mobile, String url) {
+    public Customer(String id, String fName, String lName, String customerID, String address, String city, String phone, String mobile, int typeId, String url) {
         this.id = id;
         this.fName = fName;
         this.lName = lName;
@@ -43,7 +43,7 @@ public class Customer {
         Calendar date = Calendar.getInstance();
         openDate = date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.MONTH)+1) +"/" + date.get(Calendar.YEAR);
 
-        this.typeID = 0;
+        this.typeID = typeId;
         this.url = url;
     }
 

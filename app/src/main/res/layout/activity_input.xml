@@ -85,11 +85,11 @@
             android:text="Glasses" />
 
         <CheckBox
-            android:id="@+id/lense"
+            android:id="@+id/lens"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Lense" />
+            android:text="Lens" />
 
     </LinearLayout>
 
