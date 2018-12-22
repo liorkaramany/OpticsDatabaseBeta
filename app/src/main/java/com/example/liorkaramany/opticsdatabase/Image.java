@@ -1,8 +1,9 @@
 package com.example.liorkaramany.opticsdatabase;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Image {
+public class Image implements Serializable {
     public String url;
     public String openDate;
 
