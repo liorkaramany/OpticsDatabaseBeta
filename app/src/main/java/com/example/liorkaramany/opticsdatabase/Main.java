@@ -1,15 +1,20 @@
 package com.example.liorkaramany.opticsdatabase;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +82,7 @@ public class Main extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.setHeaderTitle("Options");
+        menu.add("View document");
         menu.add("Edit");
         menu.add("Delete");
     }
@@ -101,19 +110,66 @@ public class Main extends AppCompatActivity {
             t.putExtra("mobile", customer.getMobile());
             t.putExtra("openDate", customer.getOpenDate());
             t.putExtra("typeID", customer.getTypeID());
-            t.putExtra("url", customer.getUrl());
 
             startActivity(t);
         }
         else if (option.equals("Delete"))
         {
             String id = customer.getId();
-            /*if (!customer.getUrl().equals("")) {
-                StorageReference r = FirebaseStorage.getInstance().getReferenceFromUrl(customer.getUrl());
-                r.delete();
-            }*/
             ref.child(id).child("object").removeValue();
+            ref.child(id).child("image").removeValue();
+            StorageReference r = FirebaseStorage.getInstance().getReference("customers").child(id);
+            r.delete();
             Toast.makeText(this, "Customer has been deleted", Toast.LENGTH_SHORT).show();
+        }
+        else if (option.equals("View document"))
+        {
+            final String id = customer.getId();
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
+                    {
+                        Customer customer = customerSnapshot.child("object").getValue(Customer.class);
+                        Image image = customerSnapshot.child("image").getValue(Image.class);
+
+                        if (id.equals(customer.getId()))
+                        {
+                            AlertDialog.Builder adb = new AlertDialog.Builder(Main.this);
+
+                            LayoutInflater inflater = Main.this.getLayoutInflater();
+                            View dialogView = inflater.inflate(R.layout.img_layout, null);
+                            adb.setView(dialogView);
+
+                            ImageView document = dialogView.findViewById(R.id.document);
+                            TextView date = dialogView.findViewById(R.id.date);
+
+                            String url = image.getUrl();
+                            String d = image.getOpenDate();
+                            date.setText(d);
+                            Picasso.get().load(url).into(document);
+
+                            adb.setTitle("Document");
+                            adb.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            AlertDialog ad = adb.create();
+                            ad.show();
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
 
         return super.onContextItemSelected(item);

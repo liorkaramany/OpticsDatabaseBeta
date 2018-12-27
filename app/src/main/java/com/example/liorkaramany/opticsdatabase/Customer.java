@@ -23,14 +23,13 @@ public class Customer {
     public String mobile;
     public String openDate;
     public int typeID;
-    public String url;
 
     public Customer()
     {
 
     }
 
-    public Customer(String id, String fName, String lName, String customerID, String address, String city, String phone, String mobile, int typeID, String url) {
+    public Customer(String id, String fName, String lName, String customerID, String address, String city, String phone, String mobile, int typeID) {
         this.id = id;
         this.fName = fName;
         this.lName = lName;
@@ -44,7 +43,6 @@ public class Customer {
         openDate = date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.MONTH)+1) +"/" + date.get(Calendar.YEAR);
 
         this.typeID = typeID;
-        this.url = url;
     }
 
     public String getId() {
@@ -87,7 +85,4 @@ public class Customer {
         return typeID;
     }
 
-    public String getUrl() {
-        return url;
-    }
 }

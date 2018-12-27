@@ -31,6 +31,7 @@ public class Input extends AppCompatActivity {
 
     int typeID;
     String id, url;
+    int sign;
 
     ArrayList<Image> imageList;
 
@@ -56,6 +57,7 @@ public class Input extends AppCompatActivity {
 
         Intent gt = getIntent();
         typeID = gt.getIntExtra("typeID", -1);
+        sign = gt.getIntExtra("sign", 0);
 
         if (typeID != -1)
         {
@@ -97,68 +99,37 @@ public class Input extends AppCompatActivity {
             Toast.makeText(this, "You haven't entered all the information", Toast.LENGTH_SHORT).show();
         else
         {
-            int typeId = 0;
+            int typeID = 0;
             if (glasses.isChecked() && lens.isChecked())
-                typeId = 3;
+                typeID = 3;
             else if (glasses.isChecked())
-                typeId = 1;
+                typeID = 1;
             else if (lens.isChecked())
-                typeId = 2;
+                typeID = 2;
 
-            Customer customer;
-            if (id == null)
-            {
-                String newId = dref.push().getKey();
-                customer = new Customer(newId, fn, ln, cID, a, c, p, m, typeId, url);
-                dref.child(newId).child("object").setValue(customer);
-                Toast.makeText(this, "Customer has been added", Toast.LENGTH_SHORT).show();
-            }
-            else
-                {
-                customer = new Customer(id, fn, ln, cID, a, c, p, m, typeId, url);
-                dref.child(id).child("object").setValue(customer);
+            if (sign == 1) {
+                finish();
                 Toast.makeText(this, "Customer has been edited", Toast.LENGTH_SHORT).show();
             }
 
-            finish();
+            Intent t = new Intent(this, Document.class);
+            t.putExtra("fname", fn);
+            t.putExtra("lname", ln);
+            t.putExtra("customerID", cID);
+            t.putExtra("address", a);
+            t.putExtra("city", c);
+            t.putExtra("phone", p);
+            t.putExtra("mobile", m);
+
+            if (typeID == -1)
+                t.putExtra("url", "");
+            else
+                t.putExtra("url", url);
+
+            t.putExtra("typeID", typeID);
+            t.putExtra("sign", 1);
+
+            startActivity(t);
         }
-    }
-
-    public void documents(View view) {
-        if (typeID != -1)
-        {
-            dref.child(id).child("urls").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    imageList.clear();
-                    for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
-                    {
-                        Image image = customerSnapshot.getValue(Image.class);
-
-                        imageList.add(image);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-        else
-            imageList = new ArrayList<>();
-
-        Intent t = new Intent(this, Documents.class);
-
-        t.putExtra("images", imageList);
-
-        startActivityForResult(t, 1);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /*super.onActivityResult(requestCode, resultCode, data);*/
-        if (data != null)
-            imageList = (ArrayList<Image>) data.getSerializableExtra("images");
     }
 }

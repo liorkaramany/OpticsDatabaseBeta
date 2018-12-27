@@ -7,6 +7,11 @@ public class Image implements Serializable {
     public String url;
     public String openDate;
 
+    public Image()
+    {
+
+    }
+
     public Image(String url)
     {
         this.url = url;
