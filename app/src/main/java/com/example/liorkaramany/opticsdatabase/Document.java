@@ -81,10 +81,14 @@ public class Document extends AppCompatActivity {
         mobile = gt.getStringExtra("mobile");
         typeID = gt.getIntExtra("typeID", -1);
 
+        sign = gt.getIntExtra("sign", 0);
+
         if (sign == 1)
         {
             upload.setText("Save");
             back.setText("Cancel");
+            url = gt.getStringExtra("url");
+            idFromIntent = gt.getStringExtra("id");
             Picasso.get().load(url).fit().centerInside().into(img);
         }
     }
@@ -172,7 +176,8 @@ public class Document extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 String url = uri.toString();
 
-                                ref.child(id).child("object").setValue(new Customer(id, fname, lname, customerID, address, city, phone, mobile, typeID));
+                                if (sign == 0)
+                                    ref.child(id).child("object").setValue(new Customer(id, fname, lname, customerID, address, city, phone, mobile, typeID));
                                 ref.child(id).child("image").setValue(new Image(url));
                             }
                         });
@@ -190,8 +195,8 @@ public class Document extends AppCompatActivity {
                         else
                             Toast.makeText(Document.this, "Customer has been edited", Toast.LENGTH_SHORT).show();
 
-                        Intent t = new Intent(Document.this, Main.class);
-                        startActivity(t);
+                        finish();
+                        finish();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {

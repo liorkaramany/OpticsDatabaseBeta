@@ -59,7 +59,7 @@ public class Input extends AppCompatActivity {
         typeID = gt.getIntExtra("typeID", -1);
         sign = gt.getIntExtra("sign", 0);
 
-        if (typeID != -1)
+        if (sign == 1)
         {
             id = gt.getStringExtra("id");
 
@@ -108,28 +108,33 @@ public class Input extends AppCompatActivity {
                 typeID = 2;
 
             if (sign == 1) {
+                Customer customer = new Customer(id, fn, ln, cID, a, c, p, m, typeID);
+                dref.child(id).child("object").setValue(customer);
+
                 finish();
                 Toast.makeText(this, "Customer has been edited", Toast.LENGTH_SHORT).show();
             }
+            else {
 
-            Intent t = new Intent(this, Document.class);
-            t.putExtra("fname", fn);
-            t.putExtra("lname", ln);
-            t.putExtra("customerID", cID);
-            t.putExtra("address", a);
-            t.putExtra("city", c);
-            t.putExtra("phone", p);
-            t.putExtra("mobile", m);
+                Intent t = new Intent(this, Document.class);
+                t.putExtra("fname", fn);
+                t.putExtra("lname", ln);
+                t.putExtra("customerID", cID);
+                t.putExtra("address", a);
+                t.putExtra("city", c);
+                t.putExtra("phone", p);
+                t.putExtra("mobile", m);
 
-            if (typeID == -1)
-                t.putExtra("url", "");
-            else
-                t.putExtra("url", url);
+                if (typeID == -1)
+                    t.putExtra("url", "");
+                else
+                    t.putExtra("url", url);
 
-            t.putExtra("typeID", typeID);
-            t.putExtra("sign", 1);
+                t.putExtra("typeID", typeID);
+                t.putExtra("sign", 1);
 
-            startActivity(t);
+                startActivity(t);
+            }
         }
     }
 }

@@ -113,7 +113,7 @@ public class Main extends AppCompatActivity {
 
         menu.setHeaderTitle("Options");
         menu.add("View document");
-        menu.add("Edit");
+        menu.add("Edit details");
         menu.add("Delete");
     }
 
@@ -124,7 +124,7 @@ public class Main extends AppCompatActivity {
         Customer customer = customerList.get(index);
 
         String option = item.getTitle().toString();
-        if (option.equals("Edit"))
+        if (option.equals("Edit details"))
         {
             Intent t = new Intent(this, Input.class);
             t.putExtra("sign", 1);
@@ -172,7 +172,7 @@ public class Main extends AppCompatActivity {
                             ImageView document = dialogView.findViewById(R.id.document);
                             TextView date = dialogView.findViewById(R.id.date);
 
-                            String url = image.getUrl();
+                            final String url = image.getUrl();
                             String d = image.getOpenDate();
                             date.setText(d);
                             Picasso.get().load(url).into(document);
@@ -182,6 +182,16 @@ public class Main extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
+                                }
+                            });
+                            adb.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent t = new Intent(Main.this, Document.class);
+                                    t.putExtra("url", url);
+                                    t.putExtra("id", id);
+                                    t.putExtra("sign", 1);
+                                    startActivity(t);
                                 }
                             });
 
