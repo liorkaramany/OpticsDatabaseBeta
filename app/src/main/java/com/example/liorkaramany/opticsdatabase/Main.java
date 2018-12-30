@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -52,6 +53,71 @@ public class Main extends AppCompatActivity {
         ref = FirebaseDatabase.getInstance().getReference("customers");
 
         list.setOnCreateContextMenuListener(this);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                final Customer customer = customerList.get(position);
+
+                AlertDialog.Builder adb = new AlertDialog.Builder(Main.this);
+
+                adb.setTitle("Customer");
+
+                LayoutInflater inflater = Main.this.getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.customer_layout, null);
+                adb.setView(dialogView);
+
+                TextView fname = (TextView) dialogView.findViewById(R.id.fname);
+                TextView lname = (TextView) dialogView.findViewById(R.id.lname);
+                TextView customerID = (TextView) dialogView.findViewById(R.id.customerID);
+                TextView address = (TextView) dialogView.findViewById(R.id.address);
+                TextView city = (TextView) dialogView.findViewById(R.id.city);
+                TextView phone = (TextView) dialogView.findViewById(R.id.phone);
+                TextView mobile = (TextView) dialogView.findViewById(R.id.mobile);
+                TextView opendate = (TextView) dialogView.findViewById(R.id.opendate);
+                CheckBox glasses = (CheckBox) dialogView.findViewById(R.id.glasses);
+                CheckBox lens = (CheckBox) dialogView.findViewById(R.id.lens);
+
+                fname.setText("" + customer.getfName());
+                lname.setText("" + customer.getlName());
+                customerID.setText("" + customer.getCustomerID());
+                address.setText("" + customer.getAddress());
+                city.setText("" + customer.getCity());
+                phone.setText("" + customer.getPhone());
+                mobile.setText("" + customer.getMobile());
+                opendate.setText("" + customer.getOpenDate());
+
+                int typeID = customer.getTypeID();
+                if (typeID >= 2)
+                    lens.setChecked(true);
+                if (typeID == 1 || typeID == 3)
+                    glasses.setChecked(true);
+
+                adb.setView(dialogView);
+
+                adb.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        editCustomer(customer);
+                    }
+                });
+                adb.setNeutralButton("View Document", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showDocument(customer);
+                    }
+                });
+                adb.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog ad = adb.create();
+                ad.show();
+            }
+        });
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // The request code used in ActivityCompat.requestPermissions()
@@ -67,6 +133,25 @@ public class Main extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
             }
         }
+    }
+
+    public void editCustomer(Customer customer)
+    {
+        Intent t = new Intent(Main.this, Input.class);
+        t.putExtra("sign", 1);
+
+        t.putExtra("id", customer.getId());
+        t.putExtra("fname", customer.getfName());
+        t.putExtra("lname", customer.getlName());
+        t.putExtra("customerID", customer.getCustomerID());
+        t.putExtra("address", customer.getAddress());
+        t.putExtra("city", customer.getCity());
+        t.putExtra("phone", customer.getPhone());
+        t.putExtra("mobile", customer.getMobile());
+        t.putExtra("openDate", customer.getOpenDate());
+        t.putExtra("typeID", customer.getTypeID());
+
+        startActivity(t);
     }
 
     public static boolean hasPermissions(Context context, String... permissions) {
@@ -126,21 +211,7 @@ public class Main extends AppCompatActivity {
         String option = item.getTitle().toString();
         if (option.equals("Edit details"))
         {
-            Intent t = new Intent(this, Input.class);
-            t.putExtra("sign", 1);
-
-            t.putExtra("id", customer.getId());
-            t.putExtra("fname", customer.getfName());
-            t.putExtra("lname", customer.getlName());
-            t.putExtra("customerID", customer.getCustomerID());
-            t.putExtra("address", customer.getAddress());
-            t.putExtra("city", customer.getCity());
-            t.putExtra("phone", customer.getPhone());
-            t.putExtra("mobile", customer.getMobile());
-            t.putExtra("openDate", customer.getOpenDate());
-            t.putExtra("typeID", customer.getTypeID());
-
-            startActivity(t);
+            editCustomer(customer);
         }
         else if (option.equals("Delete"))
         {
@@ -153,63 +224,68 @@ public class Main extends AppCompatActivity {
         }
         else if (option.equals("View document"))
         {
-            final String id = customer.getId();
-            ref.addListenerForSingleValueEvent( new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    for (DataSnapshot customerSnapshot : dataSnapshot.getChildren()) {
-                        Customer customer = customerSnapshot.child("object").getValue(Customer.class);
-                        Image image = customerSnapshot.child("image").getValue(Image.class);
-
-                        if (id.equals(customer.getId())) {
-                            AlertDialog.Builder adb = new AlertDialog.Builder(Main.this);
-
-                            LayoutInflater inflater = Main.this.getLayoutInflater();
-                            View dialogView = inflater.inflate(R.layout.img_layout, null);
-                            adb.setView(dialogView);
-
-                            ImageView document = dialogView.findViewById(R.id.document);
-                            TextView date = dialogView.findViewById(R.id.date);
-
-                            final String url = image.getUrl();
-                            String d = image.getOpenDate();
-                            date.setText(d);
-                            Picasso.get().load(url).into(document);
-
-                            adb.setTitle("Document");
-                            adb.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            adb.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent t = new Intent(Main.this, Document.class);
-                                    t.putExtra("url", url);
-                                    t.putExtra("id", id);
-                                    t.putExtra("sign", 1);
-                                    startActivity(t);
-                                }
-                            });
-
-                            AlertDialog ad = adb.create();
-                            ad.show();
-                        }
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+            showDocument(customer);
         }
 
         return super.onContextItemSelected(item);
+    }
+
+    public void showDocument(Customer customer)
+    {
+        final String id = customer.getId();
+        ref.addListenerForSingleValueEvent( new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot customerSnapshot : dataSnapshot.getChildren()) {
+                    Customer customer = customerSnapshot.child("object").getValue(Customer.class);
+                    Image image = customerSnapshot.child("image").getValue(Image.class);
+
+                    if (id.equals(customer.getId())) {
+                        AlertDialog.Builder adb = new AlertDialog.Builder(Main.this);
+
+                        LayoutInflater inflater = Main.this.getLayoutInflater();
+                        View dialogView = inflater.inflate(R.layout.img_layout, null);
+                        adb.setView(dialogView);
+
+                        ImageView document = dialogView.findViewById(R.id.document);
+                        TextView date = dialogView.findViewById(R.id.date);
+
+                        final String url = image.getUrl();
+                        String d = image.getOpenDate();
+                        date.setText(d);
+                        Picasso.get().load(url).into(document);
+
+                        adb.setTitle("Document");
+                        adb.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        adb.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent t = new Intent(Main.this, Document.class);
+                                t.putExtra("url", url);
+                                t.putExtra("id", id);
+                                t.putExtra("sign", 1);
+                                startActivity(t);
+                            }
+                        });
+
+                        AlertDialog ad = adb.create();
+                        ad.show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void add(View view) {

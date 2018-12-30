@@ -30,7 +30,7 @@ public class Input extends AppCompatActivity {
     Button rightBtn;
 
     int typeID;
-    String id, url;
+    String id/*, url*/;
     int sign;
 
     ArrayList<Image> imageList;
@@ -78,7 +78,7 @@ public class Input extends AppCompatActivity {
             if (typeID == 1 || typeID == 3)
                 glasses.setChecked(true);
 
-            url = gt.getStringExtra("url");
+            //url = gt.getStringExtra("url");
         }
     }
 
@@ -125,13 +125,13 @@ public class Input extends AppCompatActivity {
                 t.putExtra("phone", p);
                 t.putExtra("mobile", m);
 
-                if (typeID == -1)
+                /*if (sign == 0)
                     t.putExtra("url", "");
                 else
-                    t.putExtra("url", url);
+                    t.putExtra("url", url);*/
 
                 t.putExtra("typeID", typeID);
-                t.putExtra("sign", 1);
+                //t.putExtra("sign", 1);
 
                 startActivity(t);
             }
