@@ -212,7 +212,10 @@ public class Document extends AppCompatActivity {
     }
 
     public void back(View view) {
-        finish();
+        if (uploadTask != null)
+            Toast.makeText(this, "Image is currently being uploaded", Toast.LENGTH_LONG).show();
+        else
+            finish();
     }
 
 }
