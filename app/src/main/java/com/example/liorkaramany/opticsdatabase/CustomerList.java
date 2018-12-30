@@ -47,20 +47,24 @@ public class CustomerList extends ArrayAdapter<Customer> {
 
         Customer customer = customerList.get(position);
 
-        fname.setText(customer.getfName());
-        lname.setText(""+customer.getlName());
-        customerID.setText(""+customer.getCustomerID());
-        address.setText(""+customer.getAddress());
-        city.setText(""+customer.getCity());
-        phone.setText(""+customer.getPhone());
-        mobile.setText(""+customer.getMobile());
-        opendate.setText(""+customer.getOpenDate());
+        if (customer != null) {
 
-        int typeId = customer.getTypeID();
-        if (typeId >= 2)
-            lens.setChecked(true);
-        if (typeId == 1 || typeId == 3)
-            glasses.setChecked(true);
+            fname.setText(customer.getfName());
+            lname.setText("" + customer.getlName());
+            customerID.setText("" + customer.getCustomerID());
+            address.setText("" + customer.getAddress());
+            city.setText("" + customer.getCity());
+            phone.setText("" + customer.getPhone());
+            mobile.setText("" + customer.getMobile());
+            opendate.setText("" + customer.getOpenDate());
+
+            int typeId = customer.getTypeID();
+            if (typeId >= 2)
+                lens.setChecked(true);
+            if (typeId == 1 || typeId == 3)
+                glasses.setChecked(true);
+
+        }
 
 
         return listViewItem;

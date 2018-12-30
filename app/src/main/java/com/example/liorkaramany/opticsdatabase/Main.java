@@ -53,10 +53,10 @@ public class Main extends AppCompatActivity {
         ref = FirebaseDatabase.getInstance().getReference("customers");
 
         list.setOnCreateContextMenuListener(this);
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 final Customer customer = customerList.get(position);
 
                 AlertDialog.Builder adb = new AlertDialog.Builder(Main.this);
@@ -134,6 +134,7 @@ public class Main extends AppCompatActivity {
             }
         }
     }
+
 
     public void editCustomer(Customer customer)
     {
