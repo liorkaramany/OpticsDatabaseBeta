@@ -1,8 +1,14 @@
 package com.example.liorkaramany.opticsdatabase;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +54,32 @@ public class Main extends AppCompatActivity {
         ref = FirebaseDatabase.getInstance().getReference("customers");
 
         list.setOnCreateContextMenuListener(this);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // The request code used in ActivityCompat.requestPermissions()
+            // and returned in the Activity's onRequestPermissionsResult()
+            int PERMISSION_ALL = 1;
+            String[] PERMISSIONS = {
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.CAMERA
+            };
+
+            if(!hasPermissions(this, PERMISSIONS)){
+                ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+            }
+        }
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -89,7 +121,6 @@ public class Main extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int index = info.position;
         Customer customer = customerList.get(index);
@@ -125,17 +156,15 @@ public class Main extends AppCompatActivity {
         else if (option.equals("View document"))
         {
             final String id = customer.getId();
-            ref.addValueEventListener(new ValueEventListener() {
+            ref.addListenerForSingleValueEvent( new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
-                    {
+                    for (DataSnapshot customerSnapshot : dataSnapshot.getChildren()) {
                         Customer customer = customerSnapshot.child("object").getValue(Customer.class);
                         Image image = customerSnapshot.child("image").getValue(Image.class);
 
-                        if (id.equals(customer.getId()))
-                        {
+                        if (id.equals(customer.getId())) {
                             AlertDialog.Builder adb = new AlertDialog.Builder(Main.this);
 
                             LayoutInflater inflater = Main.this.getLayoutInflater();
