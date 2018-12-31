@@ -8,32 +8,44 @@
     android:gravity="center"
     tools:context=".Main">
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="450dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="?android:attr/buttonBarStyle"
         android:orientation="horizontal">
 
         <Button
+            android:onClick="sortFName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            style="?android:attr/buttonBarButtonStyle"
-            android:onClick="add"
-            android:text="Add Customer" />
+            android:text="First Name" />
 
         <Button
-            android:onClick="sort"
+            android:onClick="sortLName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="Sort" />
+            android:text="Last name" />
+
+        <Button
+            android:onClick="sortDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Date" />
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="400dp" />
+
+    <Button
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="add"
+        android:text="Add Customer" />
 
 </LinearLayout>

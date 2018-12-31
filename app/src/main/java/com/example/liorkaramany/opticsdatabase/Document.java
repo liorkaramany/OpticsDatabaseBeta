@@ -196,13 +196,18 @@ public class Document extends AppCompatActivity {
                             }
                         }, 500);
 
-                        if (sign == 0)
+                        if (sign == 0) {
                             Toast.makeText(Document.this, "Customer has been uploaded", Toast.LENGTH_SHORT).show();
-                        else
+                            Intent intent = new Intent(Document.this,
+                                    Main.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            startActivity(intent);
+                        }
+                        else {
                             Toast.makeText(Document.this, "Customer has been edited", Toast.LENGTH_SHORT).show();
-
-                        Intent t = new Intent(Document.this, Main.class);
-                        startActivity(t);
+                            finish();
+                        }
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {

@@ -320,38 +320,105 @@ public class Main extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sort(View view) {
-        final String[] options = {"First name", "Last name", "Date"};
 
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-
-        adb.setTitle("Select what to sort by");
-
-        adb.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sortList(which);
-            }
-        });
-        adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog ad = adb.create();
-        ad.show();
-    }
 
     public void sortList(int option)
     {
+        Query query;
         switch (option)
         {
+            case 0:
+                query = ref.orderByChild("fName");
+
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        customerList.clear();
+                        for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
+                        {
+                            Customer customer = customerSnapshot.getValue(Customer.class);
+
+                            customerList.add(customer);
+                        }
+
+                        CustomerList adapter = new CustomerList(Main.this, customerList);
+                        list.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                break;
+
+            case 1:
+                query = ref.orderByChild("lName");
+
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        customerList.clear();
+                        for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
+                        {
+                            Customer customer = customerSnapshot.getValue(Customer.class);
+
+                            customerList.add(customer);
+                        }
+
+                        CustomerList adapter = new CustomerList(Main.this, customerList);
+                        list.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                break;
+
             case 2:
-                Query query = ref.orderByChild("date");
+                query = ref;
+
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        customerList.clear();
+                        for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
+                        {
+                            Customer customer = customerSnapshot.getValue(Customer.class);
+
+                            customerList.add(customer);
+                        }
+
+                        CustomerList adapter = new CustomerList(Main.this, customerList);
+                        list.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                 break;
         }
+    }
+
+    public void sortFName(View view) {
+        sortList(0);
+    }
+
+    public void sortLName(View view) {
+        sortList(1);
+    }
+
+    public void sortDate(View view) {
+        sortList(2);
     }
 }
