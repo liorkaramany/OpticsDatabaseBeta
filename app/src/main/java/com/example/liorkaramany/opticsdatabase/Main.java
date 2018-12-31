@@ -45,6 +45,7 @@ public class Main extends AppCompatActivity {
 
     ListView list;
     DatabaseReference ref;
+    DatabaseReference imgRef;
     List<Customer> customerList;
 
     @Override
@@ -56,6 +57,7 @@ public class Main extends AppCompatActivity {
         customerList = new ArrayList<>();
 
         ref = FirebaseDatabase.getInstance().getReference("customers");
+        imgRef = FirebaseDatabase.getInstance().getReference("images");
 
         list.setOnCreateContextMenuListener(this);
 
@@ -182,7 +184,7 @@ public class Main extends AppCompatActivity {
                 customerList.clear();
                 for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
                 {
-                    Customer customer = customerSnapshot.child("object").getValue(Customer.class);
+                    Customer customer = customerSnapshot.getValue(Customer.class);
 
                     customerList.add(customer);
                 }
@@ -222,8 +224,8 @@ public class Main extends AppCompatActivity {
         else if (option.equals("Delete"))
         {
             String id = customer.getId();
-            ref.child(id).child("object").removeValue();
-            ref.child(id).child("image").removeValue();
+            ref.child(id).removeValue();
+            imgRef.child(id).removeValue();
             StorageReference r = FirebaseStorage.getInstance().getReference("customers").child(id);
             r.delete();
             Toast.makeText(this, "Customer has been deleted", Toast.LENGTH_SHORT).show();
@@ -239,15 +241,14 @@ public class Main extends AppCompatActivity {
     public void showDocument(Customer customer)
     {
         final String id = customer.getId();
-        ref.addListenerForSingleValueEvent( new ValueEventListener() {
+        imgRef.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot customerSnapshot : dataSnapshot.getChildren()) {
-                    Customer customer = customerSnapshot.child("object").getValue(Customer.class);
-                    Image image = customerSnapshot.child("image").getValue(Image.class);
+                    Image image = customerSnapshot.getValue(Image.class);
 
-                    if (id.equals(customer.getId())) {
+                    if (id.equals(image.getId())) {
                         AlertDialog.Builder adb = new AlertDialog.Builder(Main.this);
 
                         LayoutInflater inflater = Main.this.getLayoutInflater();

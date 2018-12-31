@@ -42,6 +42,7 @@ public class Document extends AppCompatActivity {
 
     StorageReference r;
     DatabaseReference ref;
+    DatabaseReference imgRef;
 
     ProgressBar progressBar;
 
@@ -65,6 +66,7 @@ public class Document extends AppCompatActivity {
 
         r = FirebaseStorage.getInstance().getReference("customers");
         ref = FirebaseDatabase.getInstance().getReference("customers");
+        imgRef = FirebaseDatabase.getInstance().getReference("images");
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         upload = (Button) findViewById(R.id.upload);
@@ -95,24 +97,28 @@ public class Document extends AppCompatActivity {
 
     public void capture(View view) {
 
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                uri = FileProvider.getUriForFile(this,
-                        "com.example.liorkaramany.opticsdatabase.fileprovider",
-                        photoFile);
+        if (uploadTask != null)
+            Toast.makeText(this, "Image is currently being uploaded", Toast.LENGTH_LONG).show();
+        else {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    uri = FileProvider.getUriForFile(this,
+                            "com.example.liorkaramany.opticsdatabase.fileprovider",
+                            photoFile);
 
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                }
             }
         }
     }
@@ -177,8 +183,8 @@ public class Document extends AppCompatActivity {
                                 String url = uri.toString();
 
                                 if (sign == 0)
-                                    ref.child(id).child("object").setValue(new Customer(id, fname, lname, customerID, address, city, phone, mobile, typeID));
-                                ref.child(id).child("image").setValue(new Image(url));
+                                    ref.child(id).setValue(new Customer(id, fname, lname, customerID, address, city, phone, mobile, typeID));
+                                imgRef.child(id).setValue(new Image(id, url));
                             }
                         });
 
@@ -195,8 +201,8 @@ public class Document extends AppCompatActivity {
                         else
                             Toast.makeText(Document.this, "Customer has been edited", Toast.LENGTH_SHORT).show();
 
-                        finish();
-                        finish();
+                        Intent t = new Intent(Document.this, Main.class);
+                        startActivity(t);
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {

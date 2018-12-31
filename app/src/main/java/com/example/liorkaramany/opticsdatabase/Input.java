@@ -109,7 +109,7 @@ public class Input extends AppCompatActivity {
 
             if (sign == 1) {
                 Customer customer = new Customer(id, fn, ln, cID, a, c, p, m, typeID);
-                dref.child(id).child("object").setValue(customer);
+                dref.child(id).setValue(customer);
 
                 finish();
                 Toast.makeText(this, "Customer has been edited", Toast.LENGTH_SHORT).show();
