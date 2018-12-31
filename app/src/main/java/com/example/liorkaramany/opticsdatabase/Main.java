@@ -48,6 +48,8 @@ public class Main extends AppCompatActivity {
     DatabaseReference imgRef;
     List<Customer> customerList;
 
+    int option;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,7 @@ public class Main extends AppCompatActivity {
 
         ref = FirebaseDatabase.getInstance().getReference("customers");
         imgRef = FirebaseDatabase.getInstance().getReference("images");
+        option = 2;
 
         list.setOnCreateContextMenuListener(this);
 
@@ -136,7 +139,7 @@ public class Main extends AppCompatActivity {
                     android.Manifest.permission.CAMERA
             };
 
-            if(!hasPermissions(this, PERMISSIONS)){
+            if (!hasPermissions(this, PERMISSIONS)) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
             }
         }
@@ -180,17 +183,7 @@ public class Main extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                customerList.clear();
-                for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
-                {
-                    Customer customer = customerSnapshot.getValue(Customer.class);
-
-                    customerList.add(customer);
-                }
-
-                CustomerList adapter = new CustomerList(Main.this, customerList);
-                list.setAdapter(adapter);
+                sortList();
             }
 
             @Override
@@ -322,7 +315,7 @@ public class Main extends AppCompatActivity {
 
 
 
-    public void sortList(int option)
+    public void sortList()
     {
         Query query;
         switch (option)
@@ -411,14 +404,17 @@ public class Main extends AppCompatActivity {
     }
 
     public void sortFName(View view) {
-        sortList(0);
+        option = 0;
+        sortList();
     }
 
     public void sortLName(View view) {
-        sortList(1);
+        option = 1;
+        sortList();
     }
 
     public void sortDate(View view) {
-        sortList(2);
+        option = 2;
+        sortList();
     }
 }
