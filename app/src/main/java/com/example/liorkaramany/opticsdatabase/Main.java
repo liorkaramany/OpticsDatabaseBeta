@@ -27,14 +27,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Main extends AppCompatActivity {
 
@@ -312,5 +317,40 @@ public class Main extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void sort(View view) {
+        final String[] options = {"First name", "Last name", "Date"};
+
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+        adb.setTitle("Select what to sort by");
+
+        adb.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sortList(which);
+            }
+        });
+        adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog ad = adb.create();
+        ad.show();
+    }
+
+    public void sortList(int option)
+    {
+        switch (option)
+        {
+            case 2:
+                Query query = ref.orderByChild("date");
+
+                break;
+        }
     }
 }
