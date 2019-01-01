@@ -44,8 +44,11 @@ import java.util.Locale;
 public class Main extends AppCompatActivity {
 
     ListView list;
+    TextView count;
+
     DatabaseReference ref;
     DatabaseReference imgRef;
+
     List<Customer> customerList;
 
     int option;
@@ -56,6 +59,8 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         list = (ListView) findViewById(R.id.list);
+        count = (TextView) findViewById(R.id.count);
+
         customerList = new ArrayList<>();
 
         ref = FirebaseDatabase.getInstance().getReference("customers");
@@ -314,9 +319,27 @@ public class Main extends AppCompatActivity {
     }
 
 
+    public void count()
+    {
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                long c = dataSnapshot.getChildrenCount();
+                count.setText("Customers: "+c);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     public void sortList()
     {
+        count();
+
         Query query;
         switch (option)
         {

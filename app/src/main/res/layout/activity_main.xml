@@ -40,6 +40,15 @@
         android:layout_width="match_parent"
         android:layout_height="400dp" />
 
+    <TextView
+        android:paddingHorizontal="5dp"
+        android:id="@+id/count"
+        android:textColor="#222222"
+        android:text="Customers: "
+        android:textSize="17.5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
