@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,6 +50,8 @@ public class Main extends AppCompatActivity {
     DatabaseReference ref;
     DatabaseReference imgRef;
 
+    EditText search;
+
     List<Customer> customerList;
 
     int option;
@@ -60,6 +63,7 @@ public class Main extends AppCompatActivity {
 
         list = (ListView) findViewById(R.id.list);
         count = (TextView) findViewById(R.id.count);
+        search = (EditText) findViewById(R.id.search);
 
         customerList = new ArrayList<>();
 
@@ -341,6 +345,9 @@ public class Main extends AppCompatActivity {
         count();
 
         Query query;
+
+        final String s = search.getText().toString();
+
         switch (option)
         {
             case 0:
@@ -355,7 +362,8 @@ public class Main extends AppCompatActivity {
                         {
                             Customer customer = customerSnapshot.getValue(Customer.class);
 
-                            customerList.add(customer);
+                            if (searchCustomer(customer, s))
+                                customerList.add(customer);
                         }
 
                         CustomerList adapter = new CustomerList(Main.this, customerList);
@@ -382,7 +390,8 @@ public class Main extends AppCompatActivity {
                         {
                             Customer customer = customerSnapshot.getValue(Customer.class);
 
-                            customerList.add(customer);
+                            if (searchCustomer(customer, s))
+                                customerList.add(customer);
                         }
 
                         CustomerList adapter = new CustomerList(Main.this, customerList);
@@ -409,7 +418,35 @@ public class Main extends AppCompatActivity {
                         {
                             Customer customer = customerSnapshot.getValue(Customer.class);
 
-                            customerList.add(customer);
+                            if (searchCustomer(customer, s))
+                                customerList.add(customer);
+                        }
+
+                        CustomerList adapter = new CustomerList(Main.this, customerList);
+                        list.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                break;
+
+            case 3:
+
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        customerList.clear();
+                        for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
+                        {
+                            Customer customer = customerSnapshot.getValue(Customer.class);
+
+                            if (searchCustomer(customer, s))
+                                customerList.add(customer);
                         }
 
                         CustomerList adapter = new CustomerList(Main.this, customerList);
@@ -439,5 +476,24 @@ public class Main extends AppCompatActivity {
     public void sortDate(View view) {
         option = 2;
         sortList();
+    }
+
+    public void search(View view) {
+        option = 3;
+        sortList();
+    }
+
+    public boolean searchCustomer(Customer customer, String s)
+    {
+        String[] attributes = new String[2];
+        attributes[0] = customer.getfName();
+        attributes[1] = customer.getlName();
+
+        String longString = "";
+
+        for (String attribute : attributes)
+            longString += attribute + " ";
+
+        return longString.contains(s);
     }
 }
