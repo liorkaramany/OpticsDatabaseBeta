@@ -50,7 +50,7 @@ public class Main extends AppCompatActivity {
     DatabaseReference ref;
     DatabaseReference imgRef;
 
-    EditText search;
+    EditText fnameSearch, lnameSearch, idSearch;
 
     List<Customer> customerList;
 
@@ -63,7 +63,10 @@ public class Main extends AppCompatActivity {
 
         list = (ListView) findViewById(R.id.list);
         count = (TextView) findViewById(R.id.count);
-        search = (EditText) findViewById(R.id.search);
+
+        fnameSearch = (EditText) findViewById(R.id.fnameSearch);
+        lnameSearch = (EditText) findViewById(R.id.lnameSearch);
+        idSearch = (EditText) findViewById(R.id.idSearch);
 
         customerList = new ArrayList<>();
 
@@ -154,6 +157,17 @@ public class Main extends AppCompatActivity {
         }
     }
 
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     public void editCustomer(Customer customer)
     {
@@ -172,17 +186,6 @@ public class Main extends AppCompatActivity {
         t.putExtra("typeID", customer.getTypeID());
 
         startActivity(t);
-    }
-
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     @Override
@@ -346,7 +349,7 @@ public class Main extends AppCompatActivity {
 
         Query query;
 
-        final String s = search.getText().toString();
+        final String[] s = getSearchStringArray();
 
         switch (option)
         {
@@ -434,7 +437,7 @@ public class Main extends AppCompatActivity {
 
                 break;
 
-            case 3:
+            /*case 3:
 
                 ref.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -459,7 +462,7 @@ public class Main extends AppCompatActivity {
                     }
                 });
 
-                break;
+                break;*/
         }
     }
 
@@ -479,21 +482,28 @@ public class Main extends AppCompatActivity {
     }
 
     public void search(View view) {
-        option = 3;
+        //option = 3;
         sortList();
     }
 
-    public boolean searchCustomer(Customer customer, String s)
+    private String[] getSearchStringArray() {
+        return new String[] {fnameSearch.getText().toString(), lnameSearch.getText().toString(), idSearch.getText().toString()};
+    }
+
+    public boolean searchCustomer(Customer customer, String[] s)
     {
-        String[] attributes = new String[2];
+        String[] attributes = new String[3];
         attributes[0] = customer.getfName();
         attributes[1] = customer.getlName();
+        attributes[2] = customer.getCustomerID();
 
-        String longString = "";
-
-        for (String attribute : attributes)
-            longString += attribute + " ";
-
-        return longString.contains(s);
+        int i = 0;
+        while(i < attributes.length)
+        {
+            if (!attributes[i].contains(s[i]))
+                return false;
+            i++;
+        }
+        return true;
     }
 }
