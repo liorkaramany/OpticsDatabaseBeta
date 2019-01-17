@@ -153,7 +153,7 @@ public class Document extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 image = getBitmapFromUri();
-                image = imageOreintationValidator(image, mCurrentPhotoPath);
+                image = imageOrientationValidator(image, mCurrentPhotoPath);
                 img.setImageBitmap(image);
 
             } catch (Exception e) {
@@ -180,7 +180,7 @@ public class Document extends AppCompatActivity {
         }
     }
 
-    private Bitmap imageOreintationValidator(Bitmap bitmap, String path) {
+    private Bitmap imageOrientationValidator(Bitmap bitmap, String path) {
 
         ExifInterface ei;
         try {
@@ -199,7 +199,7 @@ public class Document extends AppCompatActivity {
                     break;
             }
         } catch (IOException e) {
-            Log.e("o shit: ", e.toString());
+            e.printStackTrace();
         }
 
         return bitmap;
@@ -301,4 +301,12 @@ public class Document extends AppCompatActivity {
             finish();
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        if (uploadTask != null)
+            Toast.makeText(this, "Image is currently being uploaded", Toast.LENGTH_LONG).show();
+        else
+            super.onBackPressed();
+    }
 }

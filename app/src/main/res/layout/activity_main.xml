@@ -41,10 +41,10 @@
             android:inputType="number" />
 
         <Button
+            android:text="Search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/searchicon"
+            android:layout_weight=".25"
             android:onClick="search" />
     </LinearLayout>
 
@@ -61,24 +61,24 @@
         android:orientation="horizontal">
 
         <Button
-            style="?android:attr/buttonBarButtonStyle"
             android:onClick="sortFName"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="First Name" />
 
         <Button
-            style="?android:attr/buttonBarButtonStyle"
             android:onClick="sortLName"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Last name" />
 
         <Button
-            style="?android:attr/buttonBarButtonStyle"
             android:onClick="sortDate"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
