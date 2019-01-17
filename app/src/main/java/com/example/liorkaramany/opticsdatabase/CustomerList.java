@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -42,8 +43,8 @@ public class CustomerList extends ArrayAdapter<Customer> {
         TextView mobile = (TextView) listViewItem.findViewById(R.id.mobile);
         TextView opendate = (TextView) listViewItem.findViewById(R.id.opendate);
 
-        CheckBox glasses = (CheckBox) listViewItem.findViewById(R.id.glasses);
-        CheckBox lens = (CheckBox) listViewItem.findViewById(R.id.lens);
+        RadioButton glasses = (RadioButton) listViewItem.findViewById(R.id.glasses);
+        RadioButton lens = (RadioButton) listViewItem.findViewById(R.id.lens);
 
         Customer customer = customerList.get(position);
 

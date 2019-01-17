@@ -83,7 +83,7 @@
             android:layout_weight="1"
             android:text="mobile" />
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/glasses"
             android:clickable="false"
             android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
             android:textColor="#777777"
             android:text="Glasses" />
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/lens"
             android:clickable="false"
             android:layout_width="wrap_content"

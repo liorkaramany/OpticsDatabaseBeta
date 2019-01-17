@@ -21,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,8 +98,8 @@ public class Main extends AppCompatActivity {
                 TextView phone = (TextView) dialogView.findViewById(R.id.phone);
                 TextView mobile = (TextView) dialogView.findViewById(R.id.mobile);
                 TextView opendate = (TextView) dialogView.findViewById(R.id.opendate);
-                CheckBox glasses = (CheckBox) dialogView.findViewById(R.id.glasses);
-                CheckBox lens = (CheckBox) dialogView.findViewById(R.id.lens);
+                RadioButton glasses = (RadioButton) dialogView.findViewById(R.id.glasses);
+                RadioButton lens = (RadioButton) dialogView.findViewById(R.id.lens);
 
                 fname.setText("" + customer.getfName());
                 lname.setText("" + customer.getlName());
