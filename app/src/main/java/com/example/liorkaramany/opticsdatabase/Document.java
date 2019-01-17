@@ -1,6 +1,10 @@
 package com.example.liorkaramany.opticsdatabase;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -10,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +32,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -47,6 +53,7 @@ public class Document extends AppCompatActivity {
     ProgressBar progressBar;
 
     Uri uri = null;
+    Bitmap image = null;
 
     String mCurrentPhotoPath;
 
@@ -145,8 +152,9 @@ public class Document extends AppCompatActivity {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
-
-                img.setImageURI(uri);
+                image = getBitmapFromUri();
+                image = imageOreintationValidator(image, mCurrentPhotoPath);
+                img.setImageBitmap(image);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -156,13 +164,72 @@ public class Document extends AppCompatActivity {
 
     }
 
+    public Bitmap getBitmapFromUri() {
+
+        getContentResolver().notifyChange(uri, null);
+        ContentResolver cr = getContentResolver();
+        Bitmap bitmap;
+
+        try {
+            bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, uri);
+            return bitmap;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Bitmap imageOreintationValidator(Bitmap bitmap, String path) {
+
+        ExifInterface ei;
+        try {
+            ei = new ExifInterface(path);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    bitmap = rotateImage(bitmap, 90);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    bitmap = rotateImage(bitmap, 180);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    bitmap = rotateImage(bitmap, 270);
+                    break;
+            }
+        } catch (IOException e) {
+            Log.e("o shit: ", e.toString());
+        }
+
+        return bitmap;
+    }
+
+    private Bitmap rotateImage(Bitmap source, float angle) {
+
+        Bitmap bitmap = null;
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        try {
+            bitmap = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                    matrix, true);
+        } catch (OutOfMemoryError err) {
+            err.printStackTrace();
+        }
+        return bitmap;
+    }
+
     public void upload(View view) {
         if (uploadTask != null)
             Toast.makeText(this, "Image is currently being uploaded", Toast.LENGTH_LONG).show();
         else {
-            if (uri != null) {
+            if (image != null) {
 
                 final String id;
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] data = baos.toByteArray();
 
                 StorageReference tmpRef;
                 if (sign == 0) {
@@ -174,7 +241,7 @@ public class Document extends AppCompatActivity {
                     tmpRef = FirebaseStorage.getInstance().getReferenceFromUrl(url);
                 }
 
-                uploadTask = tmpRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                uploadTask = tmpRef.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
