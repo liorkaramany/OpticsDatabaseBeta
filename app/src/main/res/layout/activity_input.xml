@@ -72,26 +72,27 @@
         android:hint="Mobile number"
         android:inputType="phone" />
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <CheckBox
+
+        <RadioButton
             android:id="@+id/glasses"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Glasses" />
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/lens"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Lens" />
-
-    </LinearLayout>
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"

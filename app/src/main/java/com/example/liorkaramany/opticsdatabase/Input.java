@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +25,8 @@ import java.util.ArrayList;
 public class Input extends AppCompatActivity {
 
     EditText fname, lname, customerID, address, city, phone, mobile;
-    CheckBox glasses, lens;
+    RadioGroup options;
+    RadioButton glasses, lens;
 
     DatabaseReference dref;
 
@@ -48,8 +51,10 @@ public class Input extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.phone);
         mobile = (EditText) findViewById(R.id.mobile);
 
-        glasses = (CheckBox) findViewById(R.id.glasses);
-        lens = (CheckBox) findViewById(R.id.lens);
+        options = (RadioGroup) findViewById(R.id.options);
+        glasses = (RadioButton) findViewById(R.id.glasses);
+        lens = (RadioButton) findViewById(R.id.lens);
+
 
         rightBtn = (Button) findViewById(R.id.rightBtn);
 
@@ -95,7 +100,8 @@ public class Input extends AppCompatActivity {
         String p = phone.getText().toString();
         String m = mobile.getText().toString();
 
-        if (fn.isEmpty() || ln.isEmpty() || cID.isEmpty() || a.isEmpty() || c.isEmpty() || p.isEmpty() || m.isEmpty())
+        if (fn.isEmpty() || ln.isEmpty() || cID.isEmpty() || a.isEmpty() || c.isEmpty() || p.isEmpty() || m.isEmpty()
+                || options.getCheckedRadioButtonId() == -1)
             Toast.makeText(this, "You haven't entered all the information", Toast.LENGTH_SHORT).show();
         else
         {
