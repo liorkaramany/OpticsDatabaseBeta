@@ -45,6 +45,19 @@ public class Customer {
         this.typeID = typeID;
     }
 
+    public Customer(String id, String fName, String lName, String customerID, String address, String city, String phone, String mobile, String openDate, int typeID) {
+        this.id = id;
+        this.fName = fName;
+        this.lName = lName;
+        this.customerID = customerID;
+        this.address = address;
+        this.city = city;
+        this.phone = phone;
+        this.mobile = mobile;
+        this.openDate = openDate;
+        this.typeID = typeID;
+    }
+
     public String getId() {
         return id;
     }

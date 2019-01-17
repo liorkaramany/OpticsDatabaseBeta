@@ -114,7 +114,8 @@ public class Input extends AppCompatActivity {
                 typeID = 2;
 
             if (sign == 1) {
-                Customer customer = new Customer(id, fn, ln, cID, a, c, p, m, typeID);
+                String openDate = getIntent().getStringExtra("openDate");
+                Customer customer = new Customer(id, fn, ln, cID, a, c, p, m, openDate, typeID);
                 dref.child(id).setValue(customer);
 
                 finish();
