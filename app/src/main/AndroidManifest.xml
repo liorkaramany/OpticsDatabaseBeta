@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Credits" />
-        <activity android:name=".Input" />
+        <activity android:name=".Input" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Document"></activity>
 
         <provider

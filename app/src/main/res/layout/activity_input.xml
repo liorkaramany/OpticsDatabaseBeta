@@ -10,7 +10,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <EditText
@@ -35,7 +36,8 @@
     <EditText
         android:id="@+id/customerID"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:ems="10"
         android:inputType="number"
         android:hint="*Customer ID" />
@@ -43,7 +45,8 @@
     <EditText
         android:id="@+id/address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:ems="10"
         android:inputType="textPostalAddress"
         android:hint="Address" />
@@ -51,7 +54,8 @@
     <EditText
         android:id="@+id/city"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:ems="10"
         android:inputType="textPostalAddress"
         android:hint="City" />
@@ -59,7 +63,8 @@
     <EditText
         android:id="@+id/phone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:ems="10"
         android:hint="*Phone number"
         android:inputType="phone" />
@@ -67,15 +72,17 @@
     <EditText
         android:id="@+id/mobile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:ems="10"
         android:hint="Mobile number"
+        android:layout_weight="1"
         android:inputType="phone" />
 
     <RadioGroup
         android:id="@+id/options"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
 
@@ -94,9 +101,15 @@
             android:text="Lens" />
     </RadioGroup>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <Button
@@ -114,4 +127,9 @@
             android:layout_weight="1"
             android:text="Upload" />
     </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
 </LinearLayout>
