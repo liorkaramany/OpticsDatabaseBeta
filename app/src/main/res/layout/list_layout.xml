@@ -35,13 +35,6 @@
             android:layout_weight="1"
             android:text="customerID" />
 
-        <TextView
-            android:id="@+id/opendate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="opendate" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -49,19 +42,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="address" />
-
-        <TextView
-            android:id="@+id/city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="city" />
     </LinearLayout>
 
     <LinearLayout
@@ -83,23 +63,29 @@
             android:layout_weight="1"
             android:text="mobile" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/glasses"
-            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#777777"
-            android:text="Glasses" />
+            android:clickable="false"
+            android:text="Glasses"
+            android:textColor="#777777" />
 
         <RadioButton
             android:id="@+id/lens"
-            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#777777"
-            android:text="Lens" />
-
+            android:clickable="false"
+            android:text="Lens"
+            android:textColor="#777777" />
     </LinearLayout>
 </LinearLayout>

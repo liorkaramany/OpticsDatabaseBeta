@@ -37,11 +37,8 @@ public class CustomerList extends ArrayAdapter<Customer> {
         TextView fname = (TextView) listViewItem.findViewById(R.id.fname);
         TextView lname = (TextView) listViewItem.findViewById(R.id.lname);
         TextView customerID = (TextView) listViewItem.findViewById(R.id.customerID);
-        TextView address = (TextView) listViewItem.findViewById(R.id.address);
-        TextView city = (TextView) listViewItem.findViewById(R.id.city);
         TextView phone = (TextView) listViewItem.findViewById(R.id.phone);
         TextView mobile = (TextView) listViewItem.findViewById(R.id.mobile);
-        TextView opendate = (TextView) listViewItem.findViewById(R.id.opendate);
 
         RadioButton glasses = (RadioButton) listViewItem.findViewById(R.id.glasses);
         RadioButton lens = (RadioButton) listViewItem.findViewById(R.id.lens);
@@ -53,11 +50,8 @@ public class CustomerList extends ArrayAdapter<Customer> {
             fname.setText(customer.getfName());
             lname.setText("" + customer.getlName());
             customerID.setText("" + customer.getCustomerID());
-            address.setText("" + customer.getAddress());
-            city.setText("" + customer.getCity());
             phone.setText("" + customer.getPhone());
             mobile.setText("" + customer.getMobile());
-            opendate.setText("" + customer.getOpenDate());
 
             int typeId = customer.getTypeID();
             if (typeId >= 2)
