@@ -352,119 +352,42 @@ public class Main extends AppCompatActivity {
 
         final String[] s = getSearchStringArray();
 
-        switch (option)
-        {
+        switch (option) {
             case 0:
                 query = ref.orderByChild("fName");
-
-                query.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        customerList.clear();
-                        for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
-                        {
-                            Customer customer = customerSnapshot.getValue(Customer.class);
-
-                            if (searchCustomer(customer, s))
-                                customerList.add(customer);
-                        }
-
-                        CustomerList adapter = new CustomerList(Main.this, customerList);
-                        list.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
                 break;
 
             case 1:
                 query = ref.orderByChild("lName");
-
-                query.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        customerList.clear();
-                        for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
-                        {
-                            Customer customer = customerSnapshot.getValue(Customer.class);
-
-                            if (searchCustomer(customer, s))
-                                customerList.add(customer);
-                        }
-
-                        CustomerList adapter = new CustomerList(Main.this, customerList);
-                        list.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
                 break;
 
-            case 2:
+            /*case 2*/default:
                 query = ref;
-
-                query.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        customerList.clear();
-                        for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
-                        {
-                            Customer customer = customerSnapshot.getValue(Customer.class);
-
-                            if (searchCustomer(customer, s))
-                                customerList.add(customer);
-                        }
-
-                        CustomerList adapter = new CustomerList(Main.this, customerList);
-                        list.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
                 break;
-
-            /*case 3:
-
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        customerList.clear();
-                        for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
-                        {
-                            Customer customer = customerSnapshot.getValue(Customer.class);
-
-                            if (searchCustomer(customer, s))
-                                customerList.add(customer);
-                        }
-
-                        CustomerList adapter = new CustomerList(Main.this, customerList);
-                        list.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-                break;*/
         }
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                customerList.clear();
+                for (DataSnapshot customerSnapshot :  dataSnapshot.getChildren())
+                {
+                    Customer customer = customerSnapshot.getValue(Customer.class);
+
+                    if (searchCustomer(customer, s))
+                        customerList.add(customer);
+                }
+
+                CustomerList adapter = new CustomerList(Main.this, customerList);
+                list.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void sortFName(View view) {

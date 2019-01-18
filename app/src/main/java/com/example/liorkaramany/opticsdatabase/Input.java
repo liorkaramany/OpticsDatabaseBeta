@@ -100,9 +100,9 @@ public class Input extends AppCompatActivity {
         String p = phone.getText().toString();
         String m = mobile.getText().toString();
 
-        if (fn.isEmpty() || ln.isEmpty() || cID.isEmpty() || a.isEmpty() || c.isEmpty() || p.isEmpty() || m.isEmpty()
+        if (fn.isEmpty() || ln.isEmpty() || cID.isEmpty() /*|| a.isEmpty() || c.isEmpty()*/ || p.isEmpty()/* || m.isEmpty()*/
                 || options.getCheckedRadioButtonId() == -1)
-            Toast.makeText(this, "You haven't entered all the information", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You haven't entered the necessary information", Toast.LENGTH_SHORT).show();
         else
         {
             int typeID = 0;

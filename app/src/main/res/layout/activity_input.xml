@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="First name" />
+            android:hint="*First name" />
 
         <EditText
             android:id="@+id/lname"
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="Last name" />
+            android:hint="*Last name" />
     </LinearLayout>
 
     <EditText
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
-        android:hint="Customer ID" />
+        android:hint="*Customer ID" />
 
     <EditText
         android:id="@+id/address"
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Phone number"
+        android:hint="*Phone number"
         android:inputType="phone" />
 
     <EditText
