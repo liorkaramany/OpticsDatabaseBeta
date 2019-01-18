@@ -17,7 +17,7 @@
         <EditText
             android:id="@+id/fnameSearch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="4"
             android:ems="10"
             android:hint="First Name"
@@ -26,7 +26,7 @@
         <EditText
             android:id="@+id/lnameSearch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="4"
             android:ems="10"
             android:hint="Last Name"
@@ -35,7 +35,7 @@
         <EditText
             android:id="@+id/idSearch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="4"
             android:ems="10"
             android:hint="ID"
@@ -44,7 +44,7 @@
         <Button
             android:text="Search"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight=".25"
             android:onClick="search" />
     </LinearLayout>
@@ -91,7 +91,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="45"/>
+        android:layout_weight="40"/>
 
     <TextView
         android:paddingHorizontal="5dp"
