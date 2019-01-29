@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">OpticsDatabase</string>
     <string name="credits">This application is made by Lior Karamany.\n\nThe mentor teachers are Itzik Ben-Shitrit and Albert Levy.</string>
+    <string-array name="options_array">
+        <item>All</item>
+        <item>Glasses</item>
+        <item>Lens</item>
+    </string-array>
 </resources>

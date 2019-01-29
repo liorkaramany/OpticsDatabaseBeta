@@ -17,11 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,9 +45,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Main extends AppCompatActivity {
+public class Main extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     ListView list;
+    Spinner options;
     TextView count;
 
     DatabaseReference ref;
@@ -55,7 +58,7 @@ public class Main extends AppCompatActivity {
 
     List<Customer> customerList;
 
-    int option;
+    int option, optionSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +66,22 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         list = (ListView) findViewById(R.id.list);
+        options = (Spinner) findViewById(R.id.options);
         count = (TextView) findViewById(R.id.count);
 
         fnameSearch = (EditText) findViewById(R.id.fnameSearch);
         lnameSearch = (EditText) findViewById(R.id.lnameSearch);
         idSearch = (EditText) findViewById(R.id.idSearch);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.options_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        options.setAdapter(adapter);
+        options.setOnItemSelectedListener(this);
+        optionSpinner = 0;
 
         customerList = new ArrayList<>();
 
@@ -374,7 +388,7 @@ public class Main extends AppCompatActivity {
                 {
                     Customer customer = customerSnapshot.getValue(Customer.class);
 
-                    if (searchCustomer(customer, s))
+                    if (searchCustomer(customer, s) && checkOption(customer))
                         customerList.add(customer);
                 }
 
@@ -429,5 +443,24 @@ public class Main extends AppCompatActivity {
             i++;
         }
         return true;
+    }
+
+    public boolean checkOption(Customer customer)
+    {
+        if (optionSpinner == 0)
+            return true;
+        return optionSpinner == customer.getTypeID();
+    }
+
+    //Listeners for the options spinner.
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        optionSpinner = position;
+        sortList();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
