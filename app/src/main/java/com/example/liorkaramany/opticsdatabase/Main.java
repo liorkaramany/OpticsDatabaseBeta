@@ -5,13 +5,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.ContextMenu;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -281,7 +284,22 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
                         final String url = image.getUrl();
                         String d = image.getOpenDate();
                         date.setText(d);
-                        Picasso.get().load(url).into(document);
+
+                        //Fit the image into the document ImageView.
+                        DisplayMetrics metrics = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                        int width = metrics.widthPixels;
+                        int height = metrics.heightPixels;
+                        final Point point = new Point(width, height);
+
+                        final int size = (int) Math.ceil(Math.sqrt(width * height));
+                        Picasso.get()
+                                .load(url)
+                                .resize(size, size)
+                                .centerInside()
+                                .into(document);
+
+                        //Picasso.get().load(url).into(document);
 
                         adb.setTitle("Document");
                         adb.setNegativeButton("Close", new DialogInterface.OnClickListener() {
