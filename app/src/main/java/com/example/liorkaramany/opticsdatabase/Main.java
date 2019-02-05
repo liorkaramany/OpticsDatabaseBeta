@@ -101,7 +101,7 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
 
                 AlertDialog.Builder adb = new AlertDialog.Builder(Main.this);
 
-                adb.setTitle("Customer");
+                adb.setTitle(R.string.customer);
 
                 LayoutInflater inflater = Main.this.getLayoutInflater();
                 View dialogView = inflater.inflate(R.layout.customer_layout, null);
