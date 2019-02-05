@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:text="Capture" />
+        android:text="@string/capture" />
 
     <ImageView
         android:id="@+id/img"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:onClick="back"
             android:layout_weight="1"
-            android:text="Back" />
+            android:text="@string/back" />
 
         <Button
             android:id="@+id/upload"
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Upload" />
+            android:text="@string/upload" />
     </LinearLayout>
 
     <ProgressBar

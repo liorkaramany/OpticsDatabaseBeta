@@ -76,7 +76,7 @@ public class Input extends AppCompatActivity {
             phone.setText("" + gt.getStringExtra("phone"));
             mobile.setText("" + gt.getStringExtra("mobile"));
 
-            rightBtn.setText("Save");
+            rightBtn.setText(getString(R.string.save));
 
             if (typeID >= 2)
                 lens.setChecked(true);
@@ -102,7 +102,7 @@ public class Input extends AppCompatActivity {
 
         if (fn.isEmpty() || ln.isEmpty() || cID.isEmpty() /*|| a.isEmpty() || c.isEmpty()*/ || p.isEmpty()/* || m.isEmpty()*/
                 || options.getCheckedRadioButtonId() == -1)
-            Toast.makeText(this, "You haven't entered the necessary information", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_enough_info), Toast.LENGTH_SHORT).show();
         else
         {
             int typeID = 0;
@@ -119,7 +119,7 @@ public class Input extends AppCompatActivity {
                 dref.child(id).setValue(customer);
 
                 finish();
-                Toast.makeText(this, "Customer has been edited", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.customer_edited), Toast.LENGTH_SHORT).show();
             }
             else {
 

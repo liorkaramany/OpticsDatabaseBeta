@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Glasses" />
+            android:text="@string/glasses" />
 
         <RadioButton
             android:clickable="false"
@@ -100,6 +100,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Lens" />
+            android:text="@string/lens" />
     </LinearLayout>
 </LinearLayout>

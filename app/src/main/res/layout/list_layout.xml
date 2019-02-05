@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="false"
-            android:text="Glasses"
+            android:text="@string/glasses"
             android:textColor="#777777" />
 
         <RadioButton
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="false"
-            android:text="Lens"
+            android:text="@string/lens"
             android:textColor="#777777" />
     </LinearLayout>
 </LinearLayout>

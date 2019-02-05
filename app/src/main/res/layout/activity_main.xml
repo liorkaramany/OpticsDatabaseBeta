@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:ems="10"
-            android:hint="First Name"
+            android:hint="@string/first_name"
             android:inputType="textPersonName" />
 
         <EditText
@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:ems="10"
-            android:hint="Last Name"
+            android:hint="@string/last_name"
             android:inputType="textPersonName" />
 
         <EditText
@@ -38,11 +38,11 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:ems="10"
-            android:hint="ID"
+            android:hint="@string/id"
             android:inputType="number" />
 
         <Button
-            android:text="Search"
+            android:text="@string/search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight=".25"
@@ -67,7 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="First Name" />
+            android:text="@string/first_name" />
 
         <Button
             android:onClick="sortLName"
@@ -75,7 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Last name" />
+            android:text="@string/last_name" />
 
         <Button
             android:onClick="sortDate"
@@ -83,7 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Date" />
+            android:text="@string/date" />
     </LinearLayout>
 
     <ListView
@@ -96,7 +96,7 @@
         android:paddingHorizontal="5dp"
         android:id="@+id/count"
         android:textColor="#222222"
-        android:text="Customers: "
+        android:text="@string/customers"
         android:textSize="17.5dp"
         android:layout_weight="3"
         android:layout_width="match_parent"
@@ -107,6 +107,6 @@
         android:layout_height="0dp"
         android:onClick="add"
         android:layout_weight="6"
-        android:text="Add Customer" />
+        android:text="@string/add_customer" />
 
 </LinearLayout>

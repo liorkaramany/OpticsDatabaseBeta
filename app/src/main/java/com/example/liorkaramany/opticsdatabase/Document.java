@@ -94,8 +94,8 @@ public class Document extends AppCompatActivity {
 
         if (sign == 1)
         {
-            upload.setText("Save");
-            back.setText("Cancel");
+            upload.setText(getString(R.string.save));
+            back.setText(getString(R.string.cancel));
             url = gt.getStringExtra("url");
             idFromIntent = gt.getStringExtra("id");
             Picasso.get().load(url).fit().centerInside().into(img);
@@ -105,7 +105,7 @@ public class Document extends AppCompatActivity {
     public void capture(View view) {
 
         if (uploadTask != null)
-            Toast.makeText(this, "Image is currently being uploaded", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.image_uploaded), Toast.LENGTH_LONG).show();
         else {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             // Ensure that there's a camera activity to handle the intent
@@ -221,7 +221,7 @@ public class Document extends AppCompatActivity {
 
     public void upload(View view) {
         if (uploadTask != null)
-            Toast.makeText(this, "Image is currently being uploaded", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.currently_uploading), Toast.LENGTH_LONG).show();
         else {
             if (image != null) {
 
@@ -264,7 +264,7 @@ public class Document extends AppCompatActivity {
                         }, 500);
 
                         if (sign == 0) {
-                            Toast.makeText(Document.this, "Customer has been uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Document.this, getString(R.string.customer_uploaded), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Document.this,
                                     Main.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -272,7 +272,7 @@ public class Document extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else {
-                            Toast.makeText(Document.this, "Customer has been edited", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Document.this, getString(R.string.customer_edited), Toast.LENGTH_SHORT).show();
                             finish();
                         }
 
@@ -281,7 +281,7 @@ public class Document extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressBar.setProgress(0);
-                        Toast.makeText(Document.this, "Push failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Document.this, getString(R.string.push_failed), Toast.LENGTH_SHORT).show();
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -290,13 +290,13 @@ public class Document extends AppCompatActivity {
                         progressBar.setProgress((int) progress);
                     }
                 });
-            } else Toast.makeText(this, "You didn't capture a photo", Toast.LENGTH_LONG).show();
+            } else Toast.makeText(this, getString(R.string.no_photo), Toast.LENGTH_LONG).show();
         }
     }
 
     public void back(View view) {
         if (uploadTask != null)
-            Toast.makeText(this, "Image is currently being uploaded", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.image_uploaded), Toast.LENGTH_LONG).show();
         else
             finish();
     }
@@ -305,7 +305,7 @@ public class Document extends AppCompatActivity {
     public void onBackPressed()
     {
         if (uploadTask != null)
-            Toast.makeText(this, "Image is currently being uploaded", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.image_uploaded), Toast.LENGTH_LONG).show();
         else
             super.onBackPressed();
     }

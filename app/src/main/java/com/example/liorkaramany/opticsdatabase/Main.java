@@ -135,19 +135,19 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
 
                 adb.setView(dialogView);
 
-                adb.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                adb.setPositiveButton(getString(R.string.edit), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         editCustomer(customer);
                     }
                 });
-                adb.setNeutralButton("View Document", new DialogInterface.OnClickListener() {
+                adb.setNeutralButton(getString(R.string.view_document), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         showDocument(customer);
                     }
                 });
-                adb.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                adb.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -227,10 +227,10 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        menu.setHeaderTitle("Options");
-        menu.add("View document");
-        menu.add("Edit details");
-        menu.add("Delete");
+        menu.setHeaderTitle(getString(R.string.options_settings));
+        menu.add(getString(R.string.view_document));
+        menu.add(getString(R.string.edit_details));
+        menu.add(getString(R.string.delete));
     }
 
     @Override
@@ -240,20 +240,20 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
         Customer customer = customerList.get(index);
 
         String option = item.getTitle().toString();
-        if (option.equals("Edit details"))
+        if (option.equals(getString(R.string.edit_details)))
         {
             editCustomer(customer);
         }
-        else if (option.equals("Delete"))
+        else if (option.equals(getString(R.string.delete)))
         {
             String id = customer.getId();
             ref.child(id).removeValue();
             imgRef.child(id).removeValue();
             StorageReference r = FirebaseStorage.getInstance().getReference("customers").child(id);
             r.delete();
-            Toast.makeText(this, "Customer has been deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.customer_deleted), Toast.LENGTH_SHORT).show();
         }
-        else if (option.equals("View document"))
+        else if (option.equals(getString(R.string.view_document)))
         {
             showDocument(customer);
         }
@@ -301,14 +301,14 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
 
                         //Picasso.get().load(url).into(document);
 
-                        adb.setTitle("Document");
-                        adb.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                        adb.setTitle(R.string.document);
+                        adb.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
                         });
-                        adb.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                        adb.setPositiveButton(R.string.edit, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent t = new Intent(Main.this, Document.class);
@@ -341,7 +341,7 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        menu.add("Credits");
+        menu.add(getString(R.string.credits_option));
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -349,7 +349,7 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getTitle().toString().equals("Credits"))
+        if (item.getTitle().toString().equals(getString(R.string.credits_option)))
         {
             Intent t = new Intent(this, Credits.class);
             startActivity(t);
@@ -366,7 +366,7 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 long c = dataSnapshot.getChildrenCount();
-                count.setText("Customers: "+c);
+                count.setText(getString(R.string.customers)+c);
             }
 
             @Override
