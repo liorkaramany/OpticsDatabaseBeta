@@ -141,13 +141,13 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
                         editCustomer(customer);
                     }
                 });
-                adb.setNeutralButton(getString(R.string.view_document), new DialogInterface.OnClickListener() {
+                adb.setNegativeButton(getString(R.string.view_document), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         showDocument(customer);
                     }
                 });
-                adb.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                adb.setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
