@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -278,7 +279,7 @@ public class Main extends AppCompatActivity implements AdapterView.OnItemSelecte
                         View dialogView = inflater.inflate(R.layout.img_layout, null);
                         adb.setView(dialogView);
 
-                        ImageView document = dialogView.findViewById(R.id.document);
+                        PhotoView document = dialogView.findViewById(R.id.document);
                         TextView date = dialogView.findViewById(R.id.date);
 
                         final String url = image.getUrl();

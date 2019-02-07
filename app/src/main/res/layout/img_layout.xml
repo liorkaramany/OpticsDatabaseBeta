@@ -10,7 +10,7 @@
         android:textSize="20dp"
         android:id="@+id/date"/>
 
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/document"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
